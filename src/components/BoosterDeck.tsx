@@ -4,7 +4,6 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  RotateCcw,
   Upload,
   Zap,
   Shield,
@@ -12,7 +11,6 @@ import {
   Check,
   Bookmark,
   Copy,
-  Keyboard,
   Sparkles,
 } from 'lucide-react';
 import { BoosterState } from '../types';
@@ -65,6 +63,12 @@ export function BoosterDeck({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!e.altKey) return;
+
+      // Avoid capturing when actively typing text in an address or search input
+      const target = e.target as HTMLElement;
+      if (target && target.tagName === 'INPUT' && (target as HTMLInputElement).type === 'text') {
+        return;
+      }
 
       if (e.key === 'ArrowUp') {
         e.preventDefault();
@@ -156,6 +160,7 @@ export function BoosterDeck({
   const circumference = 2 * Math.PI * radius; // ~402.12
   const progressRatio = state.isMuted ? 0 : Math.min(1, state.volume / 600);
   const strokeDashoffset = circumference - circumference * progressRatio;
+  const volumeFillPercent = state.isMuted ? 0 : Math.min(100, Math.max(0, (state.volume / 600) * 100));
 
   // Dial status label
   let dialLabel = 'UNITY (100%)';
@@ -411,8 +416,14 @@ export function BoosterDeck({
                     max="600"
                     step="5"
                     value={state.isMuted ? 0 : state.volume}
-                    onChange={(e) => onVolumeChange(Number(e.target.value))}
-                    className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer"
+                    onChange={(e) => {
+                      audioEngine.getContext();
+                      onVolumeChange(Number(e.target.value));
+                    }}
+                    style={{
+                      background: `linear-gradient(to right, #ffffff 0%, #ffffff ${volumeFillPercent}%, #27272a ${volumeFillPercent}%, #27272a 100%)`,
+                    }}
+                    className="w-full h-2 rounded-lg appearance-none cursor-pointer transition-[background]"
                   />
                 </div>
               </div>

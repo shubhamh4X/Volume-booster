@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Volume2, Lock, Download, ExternalLink } from 'lucide-react';
+import { Volume2, Lock, Download } from 'lucide-react';
 import { BoosterState } from '../types';
 
 interface HeaderProps {
