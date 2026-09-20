@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Volume Booster</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="header">
+      <div class="brand">
+        <svg class="icon-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <span class="title">Volume Booster</span>
+      </div>
+      <span id="tabBadge" class="badge">ACTIVE TAB</span>
+    </header>
+
+    <div class="meter-wrapper">
+      <div class="volume-dial-container">
+        <svg class="dial-svg" viewBox="0 0 120 120">
+          <circle class="dial-track" cx="60" cy="60" r="50"></circle>
+          <circle id="dialProgress" class="dial-fill" cx="60" cy="60" r="50"></circle>
+        </svg>
+        <div class="dial-content">
+          <span id="volumeValue" class="dial-number">100%</span>
+          <span id="boostLabel" class="dial-label">NORMAL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Volume Slider (0 - 600%) -->
+    <div class="control-row">
+      <label for="volumeSlider">Master Volume (up to 600%)</label>
+      <input type="range" id="volumeSlider" min="0" max="600" step="5" value="100">
+    </div>
+
+    <!-- Quick Boost Presets -->
+    <div class="pill-group">
+      <button class="pill" data-boost="100">100%</button>
+      <button class="pill" data-boost="200">200%</button>
+      <button class="pill" data-boost="300">300%</button>
+      <button class="pill" data-boost="450">450%</button>
+      <button class="pill highlight" data-boost="600">MAX (600%)</button>
+    </div>
+
+    <!-- Bass Boost -->
+    <div class="control-row">
+      <div class="row-label">
+        <label for="bassSlider">Bass Enhancer</label>
+        <span id="bassValue">0%</span>
+      </div>
+      <input type="range" id="bassSlider" min="0" max="100" step="5" value="0">
+    </div>
+
+    <!-- Action Toggles -->
+    <div class="toggles-grid">
+      <label class="toggle-card">
+        <input type="checkbox" id="limiterToggle" checked>
+        <span class="toggle-title">Anti-Distortion Limiter</span>
+        <span class="toggle-desc">Prevents harsh clipping</span>
+      </label>
+      <button id="muteBtn" class="mute-button">
+        <span id="muteText">Mute Audio</span>
+      </button>
+    </div>
+
+    <footer class="footer">
+      <span>Shortcuts: Alt+Up / Alt+Down / Alt+B</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

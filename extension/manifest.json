@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Volume Booster - Up to 600%",
+  "version": "1.0.0",
+  "description": "Boost audio volume up to 600% on any tab, video, YouTube, Netflix, Spotify, or podcast.",
+  "permissions": ["activeTab", "scripting", "storage", "tabCapture"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "increase-volume": {
+      "suggested_key": {
+        "default": "Alt+Up"
+      },
+      "description": "Increase volume by 10%"
+    },
+    "decrease-volume": {
+      "suggested_key": {
+        "default": "Alt+Down"
+      },
+      "description": "Decrease volume by 10%"
+    },
+    "toggle-mute": {
+      "suggested_key": {
+        "default": "Alt+M"
+      },
+      "description": "Mute / Unmute current tab"
+    },
+    "max-boost": {
+      "suggested_key": {
+        "default": "Alt+B"
+      },
+      "description": "Max volume boost (600%)"
+    }
+  }
+}

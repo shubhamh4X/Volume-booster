@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="50%" stop-color="#111114" />
+      <stop offset="100%" stop-color="#09090b" />
+    </linearGradient>
+
+    <!-- Card Background -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121215" />
+      <stop offset="100%" stop-color="#0a0a0c" />
+    </linearGradient>
+
+    <!-- Arc Glow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#52525b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bgGrad)" />
+
+  <!-- Subtle grid pattern -->
+  <g stroke="#27272a" stroke-width="1" opacity="0.3">
+    <line x1="0" y1="135" x2="1200" y2="135" />
+    <line x1="0" y1="270" x2="1200" y2="270" />
+    <line x1="0" y1="405" x2="1200" y2="405" />
+    <line x1="0" y1="540" x2="1200" y2="540" />
+    <line x1="240" y1="0" x2="240" y2="675" />
+    <line x1="480" y1="0" x2="480" y2="675" />
+    <line x1="720" y1="0" x2="720" y2="675" />
+    <line x1="960" y1="0" x2="960" y2="675" />
+  </g>
+
+  <!-- Top Chrome-Style Bar -->
+  <g transform="translate(180, 50)">
+    <rect width="840" height="42" rx="12" fill="#18181b" stroke="#27272a" stroke-width="1" />
+    <!-- Window controls -->
+    <circle cx="22" cy="21" r="5.5" fill="#3f3f46" />
+    <circle cx="38" cy="21" r="5.5" fill="#3f3f46" />
+    <circle cx="54" cy="21" r="5.5" fill="#3f3f46" />
+    <!-- Address bar -->
+    <rect x="75" y="8" width="600" height="26" rx="6" fill="#09090b" stroke="#27272a" stroke-width="1" />
+    <text x="95" y="25" fill="#a1a1aa" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', monospace" font-size="11">https://youtube.com/watch?v=quiet-speech-video</text>
+    <!-- Extension icon in toolbar -->
+    <rect x="770" y="8" width="26" height="26" rx="6" fill="#ffffff" />
+    <!-- Speaker icon -->
+    <polygon points="779,16 776,18 774,18 774,24 776,24 779,26" fill="#000000" />
+    <!-- Badge -->
+    <rect x="786" y="5" width="22" height="12" rx="3" fill="#000000" stroke="#52525b" stroke-width="0.75" />
+    <text x="797" y="14" fill="#ffffff" font-family="monospace" font-size="7" font-weight="900" text-anchor="middle">600</text>
+  </g>
+
+  <!-- Left Feature Column / Hero Typography -->
+  <g transform="translate(120, 150)">
+    <!-- Pill Badge -->
+    <rect width="185" height="28" rx="14" fill="#18181b" stroke="#3f3f46" stroke-width="1" />
+    <text x="92" y="18" fill="#ffffff" font-family="monospace" font-size="11" font-weight="700" text-anchor="middle">MANIFEST V3 READY</text>
+
+    <!-- Main Headline -->
+    <text x="0" y="75" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="44" font-weight="900" letter-spacing="-1.5">
+      Volume Booster
+    </text>
+    <text x="0" y="120" fill="#a1a1aa" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="22" font-weight="500">
+      Amplify Any Web Audio Up To 600%
+    </text>
+
+    <text x="0" y="170" fill="#71717a" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="14" font-weight="400">
+      High-gain Web Audio API GainNode engine built for Chrome,
+    </text>
+    <text x="0" y="194" fill="#71717a" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="14" font-weight="400">
+      Brave, Edge, and Opera with anti-clipping limiter.
+    </text>
+
+    <!-- Feature list pills -->
+    <g transform="translate(0, 230)">
+      <rect width="210" height="34" rx="8" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="16" y="21" fill="#e4e4e7" font-family="monospace" font-size="12" font-weight="600">⚡ 600% Maximum Boost</text>
+    </g>
+
+    <g transform="translate(0, 275)">
+      <rect width="210" height="34" rx="8" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="16" y="21" fill="#e4e4e7" font-family="monospace" font-size="12" font-weight="600">🛡️ Anti-Clipping Limiter</text>
+    </g>
+
+    <g transform="translate(0, 320)">
+      <rect width="210" height="34" rx="8" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="16" y="21" fill="#e4e4e7" font-family="monospace" font-size="12" font-weight="600">⌨️ Global Alt+B Hotkeys</text>
+    </g>
+
+    <g transform="translate(0, 365)">
+      <rect width="210" height="34" rx="8" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="16" y="21" fill="#e4e4e7" font-family="monospace" font-size="12" font-weight="600">🔊 Dynamic Bass Enhancer</text>
+    </g>
+  </g>
+
+  <!-- Right Side: The Popup Card Mockup -->
+  <g transform="translate(680, 130)">
+    <!-- Shadow -->
+    <rect x="0" y="0" width="380" height="490" rx="28" fill="#000000" opacity="0.6" filter="url(#glow)" />
+    <!-- Popup Card Body -->
+    <rect x="0" y="0" width="380" height="490" rx="24" fill="url(#cardGrad)" stroke="#27272a" stroke-width="1.5" />
+
+    <!-- Card Header -->
+    <g transform="translate(24, 20)">
+      <rect width="36" height="36" rx="10" fill="#ffffff" />
+      <polygon points="17,13 13,16 10,16 10,22 13,22 17,25" fill="#000000" />
+      <path d="M20,15 A4,4 0 0,1 20,23" fill="none" stroke="#000000" stroke-width="1.8" stroke-linecap="round" />
+      <path d="M23,12 A8,8 0 0,1 23,26" fill="none" stroke="#000000" stroke-width="1.8" stroke-linecap="round" />
+
+      <text x="48" y="22" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" font-weight="800">Volume Booster</text>
+      <text x="48" y="34" fill="#a1a1aa" font-family="monospace" font-size="10">Active Tab • YouTube</text>
+
+      <rect x="255" y="8" width="75" height="24" rx="6" fill="#18181b" stroke="#3f3f46" stroke-width="1" />
+      <text x="292" y="24" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle">v1.0.0</text>
+    </g>
+
+    <line x1="24" y1="74" x2="356" y2="74" stroke="#27272a" stroke-width="1" />
+
+    <!-- Central 600% Circular Gauge -->
+    <g transform="translate(190, 160)">
+      <!-- Track -->
+      <circle cx="0" cy="0" r="64" fill="none" stroke="#27272a" stroke-width="9" />
+      <!-- Fill (100% full circle for 600% volume) -->
+      <circle cx="0" cy="0" r="64" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"
+              stroke-dasharray="402" stroke-dashoffset="0" transform="rotate(-90)" filter="url(#glow)" />
+      <!-- Center Text -->
+      <text x="0" y="6" fill="#ffffff" font-family="monospace" font-size="38" font-weight="900" text-anchor="middle">600%</text>
+      <text x="0" y="26" fill="#a1a1aa" font-family="monospace" font-size="10" font-weight="800" text-anchor="middle" letter-spacing="1">MAXIMUM GAIN</text>
+    </g>
+
+    <!-- Master Volume Slider -->
+    <g transform="translate(24, 255)">
+      <text x="0" y="0" fill="#a1a1aa" font-family="monospace" font-size="10" font-weight="700">MASTER VOLUME LEVEL</text>
+      <text x="332" y="0" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700" text-anchor="end">600% / 600%</text>
+
+      <rect x="0" y="10" width="332" height="8" rx="4" fill="#27272a" />
+      <rect x="0" y="10" width="332" height="8" rx="4" fill="#ffffff" />
+      <circle cx="332" cy="14" r="9" fill="#ffffff" stroke="#71717a" stroke-width="1.5" />
+    </g>
+
+    <!-- Quick Presets -->
+    <g transform="translate(24, 300)">
+      <!-- 100% -->
+      <rect x="0" y="0" width="60" height="28" rx="6" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="30" y="18" fill="#a1a1aa" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle">100%</text>
+      <!-- 200% -->
+      <rect x="68" y="0" width="60" height="28" rx="6" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="98" y="18" fill="#a1a1aa" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle">200%</text>
+      <!-- 300% -->
+      <rect x="136" y="0" width="60" height="28" rx="6" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="166" y="18" fill="#a1a1aa" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle">300%</text>
+      <!-- 450% -->
+      <rect x="204" y="0" width="60" height="28" rx="6" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="234" y="18" fill="#a1a1aa" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle">450%</text>
+      <!-- 600% Highlight -->
+      <rect x="272" y="0" width="60" height="28" rx="6" fill="#ffffff" stroke="#ffffff" stroke-width="1" />
+      <text x="302" y="18" fill="#000000" font-family="monospace" font-size="10" font-weight="900" text-anchor="middle">MAX</text>
+    </g>
+
+    <!-- Spectrum Waveform Visualizer -->
+    <g transform="translate(24, 345)">
+      <rect width="332" height="42" rx="8" fill="#09090b" stroke="#27272a" stroke-width="1" />
+      <!-- Wave bars -->
+      <g fill="url(#waveGrad)">
+        <rect x="14" y="24" width="6" height="12" rx="2" />
+        <rect x="24" y="16" width="6" height="20" rx="2" />
+        <rect x="34" y="8" width="6" height="28" rx="2" />
+        <rect x="44" y="14" width="6" height="22" rx="2" />
+        <rect x="54" y="6" width="6" height="30" rx="2" />
+        <rect x="64" y="12" width="6" height="24" rx="2" />
+        <rect x="74" y="4" width="6" height="32" rx="2" />
+        <rect x="84" y="10" width="6" height="26" rx="2" />
+        <rect x="94" y="18" width="6" height="18" rx="2" />
+        <rect x="104" y="8" width="6" height="28" rx="2" />
+        <rect x="114" y="4" width="6" height="32" rx="2" />
+        <rect x="124" y="12" width="6" height="24" rx="2" />
+        <rect x="134" y="6" width="6" height="30" rx="2" />
+        <rect x="144" y="16" width="6" height="20" rx="2" />
+        <rect x="154" y="8" width="6" height="28" rx="2" />
+        <rect x="164" y="4" width="6" height="32" rx="2" />
+        <rect x="174" y="10" width="6" height="26" rx="2" />
+        <rect x="184" y="14" width="6" height="22" rx="2" />
+        <rect x="194" y="6" width="6" height="30" rx="2" />
+        <rect x="204" y="4" width="6" height="32" rx="2" />
+        <rect x="214" y="12" width="6" height="24" rx="2" />
+        <rect x="224" y="8" width="6" height="28" rx="2" />
+        <rect x="234" y="18" width="6" height="18" rx="2" />
+        <rect x="244" y="6" width="6" height="30" rx="2" />
+        <rect x="254" y="4" width="6" height="32" rx="2" />
+        <rect x="264" y="10" width="6" height="26" rx="2" />
+        <rect x="274" y="16" width="6" height="20" rx="2" />
+        <rect x="284" y="8" width="6" height="28" rx="2" />
+        <rect x="294" y="14" width="6" height="22" rx="2" />
+        <rect x="304" y="20" width="6" height="16" rx="2" />
+        <rect x="314" y="26" width="6" height="10" rx="2" />
+      </g>
+    </g>
+
+    <!-- Bottom Controls: Bass & Limiter -->
+    <g transform="translate(24, 405)">
+      <!-- Limiter box -->
+      <rect x="0" y="0" width="200" height="42" rx="10" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="14" y="18" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700">Anti-Clip Limiter</text>
+      <text x="14" y="32" fill="#71717a" font-family="monospace" font-size="9">Prevents distortion</text>
+      <rect x="150" y="10" width="38" height="22" rx="6" fill="#ffffff" />
+      <text x="169" y="25" fill="#000000" font-family="monospace" font-size="9" font-weight="900" text-anchor="middle">ON</text>
+
+      <!-- Mute button -->
+      <rect x="210" y="0" width="122" height="42" rx="10" fill="#18181b" stroke="#27272a" stroke-width="1" />
+      <text x="271" y="26" fill="#e4e4e7" font-family="monospace" font-size="11" font-weight="700" text-anchor="middle">MUTE</text>
+    </g>
+
+    <text x="190" y="472" fill="#52525b" font-family="monospace" font-size="9" text-anchor="middle">Shortcuts: Alt+Up / Alt+Down / Alt+B (Max)</text>
+  </g>
+</svg>

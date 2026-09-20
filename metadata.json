@@ -1,0 +1,6 @@
+{
+  "name": "Volume Booster",
+  "description": "Increase audio levels up to 600% on any webpage with Web Audio gain control, bass boost, equalizer presets, and a downloadable Chrome Extension package.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
