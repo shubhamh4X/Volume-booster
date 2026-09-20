@@ -38,56 +38,89 @@ export function AudioVisualizer({ volumePercent, isMuted, isPlaying }: AudioVisu
       const width = canvas.width;
       const height = canvas.height;
 
-      // Clear with deep zinc black
-      ctx.fillStyle = '#09090b';
-      ctx.fillRect(0, 0, width, height);
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height);
 
       let freqData = new Uint8Array(barCount);
-      if (analyser && !isMuted && isPlaying) {
+      const isLive = analyser && !isMuted && isPlaying;
+      if (isLive) {
         const fullFreq = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(fullFreq);
-        // Sample down to barCount bins
         const step = Math.floor(fullFreq.length / (barCount * 1.6));
         for (let i = 0; i < barCount; i++) {
           freqData[i] = fullFreq[i * step] || 0;
         }
       }
 
+      const time = Date.now() * 0.003;
       const gainMultiplier = isMuted || !isPlaying ? 0 : Math.max(0.2, volumePercent / 100);
-      const barWidth = (width / barCount) * 0.7;
+      const barWidth = Math.max(3 * dpr, (width / barCount) * 0.65);
       const gap = (width - barWidth * barCount) / (barCount - 1);
 
       for (let i = 0; i < barCount; i++) {
-        let rawVal = (freqData[i] / 255) * gainMultiplier;
-        if (!isPlaying || isMuted) {
-          rawVal = 0.04; // subtle idle baseline
+        let rawVal = 0;
+        if (isLive) {
+          rawVal = (freqData[i] / 255) * gainMultiplier;
+        } else {
+          // Elegant idle breathing wave simulation resembling the preview graphic
+          const wave1 = Math.sin(time + i * 0.28) * 0.5 + 0.5;
+          const wave2 = Math.cos(time * 0.8 + i * 0.15) * 0.5 + 0.5;
+          rawVal = 0.08 + (wave1 * 0.22 + wave2 * 0.18) * 0.6;
+          if (isMuted) rawVal = 0.04;
         }
-        const targetH = Math.min(height * 0.95, Math.max(3 * dpr, rawVal * height * 0.9));
+
+        const targetH = Math.min(height * 0.95, Math.max(4 * dpr, rawVal * height * 0.9));
 
         // Smooth interpolation
-        barHeights[i] += (targetH - barHeights[i]) * 0.25;
+        barHeights[i] += (targetH - barHeights[i]) * 0.22;
 
-        // Peak tracking
         if (barHeights[i] > peakHold[i]) {
           peakHold[i] = barHeights[i];
         } else {
-          peakHold[i] = Math.max(3 * dpr, peakHold[i] - 1.2 * dpr);
+          peakHold[i] = Math.max(4 * dpr, peakHold[i] - 1.0 * dpr);
         }
 
         const x = i * (barWidth + gap);
         const y = height - barHeights[i];
+        const barH = barHeights[i];
 
-        // Draw bar: clean monochrome white with slight opacity for lower levels
-        ctx.fillStyle = isPlaying && !isMuted ? '#ffffff' : '#3f3f46';
-        ctx.fillRect(x, y, barWidth, barHeights[i]);
-
-        // Draw peak tick
+        // Glowing gradient bar
+        const grad = ctx.createLinearGradient(0, y, 0, height);
         if (isPlaying && !isMuted) {
-          ctx.fillStyle = '#a1a1aa';
-          ctx.fillRect(x, height - peakHold[i] - 2 * dpr, barWidth, 1.5 * dpr);
+          grad.addColorStop(0, '#ffffff');
+          grad.addColorStop(1, '#71717a');
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
+          ctx.shadowBlur = 6 * dpr;
+        } else {
+          grad.addColorStop(0, '#a1a1aa');
+          grad.addColorStop(1, '#27272a');
+          ctx.shadowColor = 'transparent';
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.fillStyle = grad;
+        
+        // Rounded bar top
+        const radius = Math.min(barWidth / 2, 2 * dpr);
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + barWidth - radius, y);
+        ctx.quadraticCurveTo(x + barWidth, y, x + barWidth, y + radius);
+        ctx.lineTo(x + barWidth, height);
+        ctx.lineTo(x, height);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw floating peak tick if active
+        if (isPlaying && !isMuted) {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(x, Math.max(0, height - peakHold[i] - 2 * dpr), barWidth, 1.5 * dpr);
         }
       }
 
+      ctx.shadowBlur = 0;
       animFrameIdRef.current = requestAnimationFrame(render);
     };
 
@@ -102,7 +135,7 @@ export function AudioVisualizer({ volumePercent, isMuted, isPlaying }: AudioVisu
   }, [volumePercent, isMuted, isPlaying]);
 
   return (
-    <div className="w-full h-16 bg-zinc-950 rounded-xl border border-zinc-800 p-2 overflow-hidden flex items-center justify-center">
+    <div className="w-full h-14 bg-zinc-950/80 rounded-xl border border-zinc-800/80 p-2 overflow-hidden flex items-center justify-center backdrop-blur-md">
       <canvas ref={canvasRef} className="w-full h-full block" />
     </div>
   );

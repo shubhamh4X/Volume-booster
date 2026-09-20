@@ -5,6 +5,7 @@
     font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: #09090b;
     color: #f4f4f5;
+    overflow-x: hidden;
   }
   
   code, pre, kbd, samp {
@@ -12,42 +13,97 @@
   }
 }
 
-@keyframes spinReel {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Atmospheric grid background */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-.reel-rotate {
-  animation: spinReel 2.8s linear infinite;
+/* Translucent glass surfaces */
+.glass-panel {
+  background: rgba(14, 14, 18, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.reel-rotate-reverse {
-  animation: spinReel 2.8s linear infinite reverse;
+.glass-panel-subtle {
+  background: rgba(24, 24, 28, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Mechanical range slider style - pure monochrome tactile design */
+/* Ambient glow effects */
+.glow-card {
+  box-shadow: 0 0 50px -10px rgba(255, 255, 255, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+}
+
+.glow-ring {
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 32px rgba(255, 255, 255, 0.35));
+}
+
+.glow-ring-subtle {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.45));
+}
+
+.glow-badge {
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+}
+
+.hover-glow:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Smooth range slider with illuminated glowing thumb */
 input[type="range"] {
   accent-color: #ffffff;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   background: #ffffff;
-  border: 1px solid #000000;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  border: 2px solid #18181b;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.6);
   cursor: grab;
-  transition: transform 0.1s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 input[type="range"]::-webkit-slider-thumb:active {
   cursor: grabbing;
-  transform: scale(1.15);
+  transform: scale(1.25);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 1);
 }
 
-/* Custom crisp dark scrollbar */
+/* Subtle breathing glow keyframe */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Custom dark scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -62,3 +118,4 @@ input[type="range"]::-webkit-slider-thumb:active {
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
