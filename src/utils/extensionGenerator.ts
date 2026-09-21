@@ -78,12 +78,21 @@ export const CONTENT_SCRIPT_JS = `/**
     isMuted: false
   };
 
-  function safeResumeAudioContext() {
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume().catch(() => {
-        // Browser autoplay policy will resume context on next user gesture
-      });
+  function hasUserGesture() {
+    if (typeof navigator !== 'undefined' && navigator.userActivation) {
+      return Boolean(navigator.userActivation.hasBeenActive);
     }
+    return userHasInteracted;
+  }
+
+  function safeResumeAudioContext() {
+    if (!audioCtx || audioCtx.state !== 'suspended') return;
+    // Chromium logs an error directly to the extension console if resume() is called
+    // while navigator.userActivation.hasBeenActive is false. Only resume when a gesture exists.
+    if (!hasUserGesture()) {
+      return;
+    }
+    audioCtx.resume().catch(() => {});
   }
 
   // Register passive user interaction handlers to cleanly unlock Web Audio
