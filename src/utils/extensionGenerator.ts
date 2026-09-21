@@ -67,6 +67,7 @@ export const CONTENT_SCRIPT_JS = `/**
  */
 (() => {
   let audioCtx = null;
+  let userHasInteracted = false;
   const connectedMedia = new WeakSet();
   const mediaNodes = [];
 
@@ -77,13 +78,35 @@ export const CONTENT_SCRIPT_JS = `/**
     isMuted: false
   };
 
-  function getAudioContext() {
+  function safeResumeAudioContext() {
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {
+        // Browser autoplay policy will resume context on next user gesture
+      });
+    }
+  }
+
+  // Register passive user interaction handlers to cleanly unlock Web Audio
+  const unlockEvents = ['click', 'keydown', 'pointerdown', 'touchstart'];
+  const onFirstInteraction = () => {
+    userHasInteracted = true;
+    safeResumeAudioContext();
+    unlockEvents.forEach(evt => {
+      document.removeEventListener(evt, onFirstInteraction, true);
+    });
+  };
+  unlockEvents.forEach(evt => {
+    document.addEventListener(evt, onFirstInteraction, { capture: true, passive: true });
+  });
+
+  function getAudioContext(forceResume = false) {
     if (!audioCtx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return null;
       audioCtx = new AudioCtx();
     }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
+    if (forceResume || userHasInteracted) {
+      safeResumeAudioContext();
     }
     return audioCtx;
   }
@@ -91,7 +114,8 @@ export const CONTENT_SCRIPT_JS = `/**
   function attachBoosterToMedia(mediaElement) {
     if (connectedMedia.has(mediaElement)) return;
     try {
-      const ctx = getAudioContext();
+      const ctx = getAudioContext(false);
+      if (!ctx) return;
       const source = ctx.createMediaElementSource(mediaElement);
 
       // Bass boost filter
@@ -119,6 +143,10 @@ export const CONTENT_SCRIPT_JS = `/**
 
       connectedMedia.add(mediaElement);
       mediaNodes.push({ mediaElement, bassFilter, gainNode, compressor });
+
+      // Automatically resume audio context when playback starts or resumes
+      mediaElement.addEventListener('play', safeResumeAudioContext, { passive: true });
+      mediaElement.addEventListener('playing', safeResumeAudioContext, { passive: true });
     } catch (err) {
       // If CORS blocks MediaElementAudioSourceNode on cross-origin stream,
       // fallback to standard element.volume multiplier where possible.
@@ -127,6 +155,7 @@ export const CONTENT_SCRIPT_JS = `/**
   }
 
   function applySettingsToAll() {
+    safeResumeAudioContext();
     const targetGain = currentSettings.isMuted ? 0 : (currentSettings.volume / 100);
     const bassGainDb = (currentSettings.bass / 100) * 15;
 
@@ -172,7 +201,7 @@ export const CONTENT_SCRIPT_JS = `/**
   // Listen on play event
   document.addEventListener('play', (e) => {
     if (e.target && (e.target.tagName === 'AUDIO' || e.target.tagName === 'VIDEO')) {
-      getAudioContext();
+      getAudioContext(true);
       attachBoosterToMedia(e.target);
       applySettingsToAll();
     }
@@ -180,6 +209,7 @@ export const CONTENT_SCRIPT_JS = `/**
 
   // Chrome Extension message listener
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    safeResumeAudioContext();
     if (request.action === 'getVolumeState') {
       sendResponse({ status: 'ok', settings: currentSettings });
     } else if (request.action === 'setVolume') {
